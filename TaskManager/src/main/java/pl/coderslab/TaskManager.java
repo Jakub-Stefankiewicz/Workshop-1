@@ -1,5 +1,7 @@
 package pl.coderslab;
 
 public class TaskManager {
-    //kod
+    public static void main(String[] args) {
+        System.out.println("działa?");
+        }
 }
