@@ -28,7 +28,7 @@ public class TaskManager {
             }
             System.out.println(reading.toString());
         } else {
-            System.out.println("coś nie tak");
+            System.out.println("coś źle");
         }
 
         }
