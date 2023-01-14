@@ -41,8 +41,8 @@ public class TaskManager {
         }
     }
 
-    /* metoda zamieniająca CSV na tablicę dwuwymiarową:**/
-    public static void tasksList() {
+    /* metoda zamieniająca plik CSV na tablicę dwuwymiarową:**/
+    public static String[][] listArray() {
         try {
             File file = new File("tasks.csv");
             Scanner tasksFromFile = new Scanner(file);
@@ -51,18 +51,30 @@ public class TaskManager {
             while (tasksFromFile.hasNextLine()) {
                 String linia=tasksFromFile.nextLine();
                 liniaStr[counter]=linia;
-                System.out.println(liniaStr[counter]);
                 String[] str= liniaStr[counter].split(",");
                 for (int i = 0; i < cols(); i++) {
                     tasks[counter][i]=str[i];
                 }
                 counter++;
-                }
-
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku tasks.");
         }
+        return tasks;
     }
+
+    /* metoda wyświetlająca listę zadań**/
+    public static void tasksList() {
+        for (int i = 0; i < rows(); i++) {
+            StringBuilder linia= new StringBuilder();
+            for (int j = 0; j < cols(); j++) {
+                linia.append(listArray()[i][j]+ ",");
+            }
+            System.out.println(linia);
+        }
+    }
+
+
     /* METODY POMOCNICZE**/
 
     /* liczba wierszy w tablicy tasks**/
