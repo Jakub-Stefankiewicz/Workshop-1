@@ -9,27 +9,35 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class TaskManager {
     public static void main(String[] args) {
 
     /* lista dostępnych do wyboru opcji: **/
-        System.out.println(ConsoleColors.BLUE + "Please select an option" + ConsoleColors.RESET);
-        optionsList();
+//        System.out.println(ConsoleColors.BLUE + "Please select an option" + ConsoleColors.RESET);
+//        optionsList();
 
     /* wybór opcji: **/
-        String option;
+        String option="";
         Scanner scan = new Scanner(System.in);
-        option = scan.nextLine();
-        switch (option){
-            case "list":
-                tasksList();
-                break;
-            default:
-                System.out.println("wybierz jedną z dostępnych opcji!");
-        }
+        System.out.println(ConsoleColors.BLUE + "Please select an option" + ConsoleColors.RESET);
+        optionsList();
+            while (!option.equals("exit")){
+                switch (option= scan.nextLine()) {
+                    case "list":
+                        tasksList();
+                        break;
+                    case "exit":
+                        System.out.println(ConsoleColors.RED + "bye, bye" + ConsoleColors.RESET);
+                        break;
+                    default:
+                        System.out.println("wybierz jedną z dostępnych opcji!");
 
+            }
+        }
     }
 
     /* METODY GŁÓWNE **/
@@ -68,11 +76,14 @@ public class TaskManager {
         for (int i = 0; i < rows(); i++) {
             StringBuilder linia= new StringBuilder();
             for (int j = 0; j < cols(); j++) {
-                linia.append(listArray()[i][j]+ ",");
+                linia.append(listArray()[i][j] + ",");
             }
-            System.out.println(linia);
+            String lineNr=Integer.toString(i);
+            System.out.println(lineNr + " " + ":" + " " + linia);
         }
     }
+
+    /*dodająca zadanie**/
 
 
     /* METODY POMOCNICZE**/
