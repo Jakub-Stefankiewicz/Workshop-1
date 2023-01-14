@@ -27,12 +27,12 @@ public class TaskManager {
                 tasksList();
                 break;
             default:
-                System.out.println("wybierz dobrze");
+                System.out.println("wybierz jedną z dostępnych opcji!");
         }
 
     }
 
-    /* Użyte metody **/
+    /* METODY GŁÓWNE **/
     /* metoda z listą opcji do wybrou:**/
     public static void optionsList() {
         String optionsList[] = {"add", "remove", "list", "exit"};
@@ -41,83 +41,70 @@ public class TaskManager {
         }
     }
 
-
+    /* metoda zamieniająca CSV na tablicę dwuwymiarową:**/
     public static void tasksList() {
-        StringBuilder reading = new StringBuilder();
+        try {
+            File file = new File("tasks.csv");
+            Scanner tasksFromFile = new Scanner(file);
+            int counter=0;
+            String[] liniaStr= new String[rows()];
+            while (tasksFromFile.hasNextLine()) {
+                String linia=tasksFromFile.nextLine();
+                liniaStr[counter]=linia;
+                System.out.println(liniaStr[counter]);
+                String[] str= liniaStr[counter].split(",");
+                for (int i = 0; i < cols(); i++) {
+                    tasks[counter][i]=str[i];
+                }
+                counter++;
+                }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Brak pliku tasks.");
+        }
+    }
+    /* METODY POMOCNICZE**/
+
+    /* liczba wierszy w tablicy tasks**/
+    public static int rows() {
+        int rows=0;
         try {
             File file = new File("tasks.csv");
             Scanner tasksFromFile = new Scanner(file);
             long lines = 0;
             Path path = Paths.get("tasks.csv");
-
-            /* pobieranie liczby wierszy:**/
-                try {
-                    lines = Files.lines(path).count();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(lines);
-                int linesInt = (int) lines;
-
-            /* definiowanie wielkości tablicy:**/
-            tasks=new String[linesInt][3];
-
-            for (int i = 0; i < linesInt; i++) {
-                for (int j = 0; j < 3; j++) {
-                    tasks[i][j]="test";
-                }
+            try {
+                lines = Files.lines(path).count();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            rows = (int) lines;
 
-            for (int i = 0; i < linesInt; i++) {
-
-            }
-
-
-            for (int i = 0; i < linesInt; i++) {
-                StringBuilder wiersz= new StringBuilder();
-                for (int j = 0; j < 3; j++) {
-                    wiersz.append(tasks[i][j] + ",");
-                }
-                System.out.println(wiersz);
-            }
-
-
-            int counter=0;
-            String[] liniaStr= new String[linesInt];
-            while (tasksFromFile.hasNextLine()) {
-                String linia=tasksFromFile.nextLine();
-                liniaStr[counter]=linia;
-                System.out.println(counter);
-                System.out.println(liniaStr[counter]);
-                String[] str= liniaStr[counter].split(",");
-                for (int i = 0; i < 3; i++) {
-                    tasks[counter][i]=str[i];
-                }
-                counter++;
-                }
-            for (int i = 0; i < tasks.length; i++) {
-                System.out.println("linia numer" + i);
-                for (int j = 0; j < 3; j++) {
-                    System.out.println("kolumna numer" + j);
-                    System.out.println(tasks[i][j]);
-                }
-
-            }
-
-//            while (tasksFromFile.hasNextLine()) {
-//                reading.append(tasksFromFile.nextLine() + "\n");
-//                String[] str= reading.toString().split(",");
-//                for (int i = 0; i < str.length; i++) {
-//                    System.out.println(str[i]);
-//                }
-//            }
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku tasks.");
         }
-        System.out.println(reading.toString());
-
+        return rows;
     }
 
-    static String[][] tasks;
+    /* liczba kolumn w tablicy tasks**/
+    public static int cols(){
+        int cols=0;
+        try {
+            File file = new File("tasks.csv");
+            Scanner tasksline = new Scanner(file);
+            String tasks=tasksline.nextLine();
+            String[] tasksCols=tasks.split(",");
+            cols=tasksCols.length;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Brak pliku tasks.");
+        }
+        return cols;
+    }
+
+    /* deklaracja dwuwymiarowej tablicy**/
+    static String[][] tasks= new String[rows()][cols()];
+
+
 }
 
