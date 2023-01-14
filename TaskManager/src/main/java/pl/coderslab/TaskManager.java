@@ -1,5 +1,6 @@
 package pl.coderslab;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -10,15 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLOutput;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.SortedMap;
 
 public class TaskManager {
     public static void main(String[] args) {
-
-    /* lista dostępnych do wyboru opcji: **/
-//        System.out.println(ConsoleColors.BLUE + "Please select an option" + ConsoleColors.RESET);
-//        optionsList();
 
     /* wybór opcji: **/
         String option="";
@@ -27,15 +25,20 @@ public class TaskManager {
         optionsList();
             while (!option.equals("exit")){
                 switch (option= scan.nextLine()) {
+                    case "add":
+                        add();
+                        break;
+                    case "remove":
+                        remove();
+                        break;
                     case "list":
                         tasksList();
                         break;
                     case "exit":
-                        System.out.println(ConsoleColors.RED + "bye, bye" + ConsoleColors.RESET);
+                        exit();
                         break;
                     default:
                         System.out.println("wybierz jedną z dostępnych opcji!");
-
             }
         }
     }
@@ -71,9 +74,37 @@ public class TaskManager {
         return tasks;
     }
 
+    /* metoda dodająca zadanie**/
+    public static void add(){
+
+        tasks=Arrays.copyOf(tasks,tasks.length+1);
+        tasks[tasks.length-1]=new String[3];
+
+        System.out.println("Please add task description");
+        Scanner description= new Scanner(System.in);
+        tasks[tasks.length-1][0]=description.next();
+
+        System.out.println("Please add task date");
+        Scanner date= new Scanner(System.in);
+        tasks[tasks.length-1][1]=date.next();
+
+        System.out.println("Please add task priority");
+        Scanner priority= new Scanner(System.in);
+        tasks[tasks.length-1][2]=priority.next();
+
+    }
+
+    /* metoda usuwająca zadanie**/
+    public static void remove(){
+//        System.out.println("Please select number to remove");
+//        Scanner rem=new Scanner(System.in);
+//        int remInt=Integer.parseInt(rem.nextLine());
+//        tasks= ArrayUtils.remove(tasks,remInt);
+    }
+
     /* metoda wyświetlająca listę zadań**/
     public static void tasksList() {
-        for (int i = 0; i < rows(); i++) {
+        for (int i = 0; i < tasks.length; i++) {
             StringBuilder linia= new StringBuilder();
             for (int j = 0; j < cols(); j++) {
                 linia.append(listArray()[i][j] + ",");
@@ -83,7 +114,24 @@ public class TaskManager {
         }
     }
 
-    /*dodająca zadanie**/
+    /* metoda zapisująca zmiany i wychodząca z programu**/
+    public static void exit(){
+        Path plik=Paths.get("tasks.csv");
+        try {
+        StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < tasks.length; i++) {
+                for (int j = 0; j < cols(); j++) {
+                    sb.append(tasks[i][j] + ",");
+                }
+                sb.append("\n");
+            }
+            Files.writeString(plik,sb.toString());
+            } catch (IOException ex){
+            System.out.println("Błąd zapisu do pliku");
+        }
+
+        System.out.println(ConsoleColors.RED + "bye, bye" + ConsoleColors.RESET);
+    }
 
 
     /* METODY POMOCNICZE**/
