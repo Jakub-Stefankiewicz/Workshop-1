@@ -1,5 +1,4 @@
 # TaskManager
-pierwszy program
 
 Pierwszy program Java w ramach warsztatów Coderslab. 
 
