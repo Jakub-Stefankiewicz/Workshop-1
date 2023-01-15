@@ -3,12 +3,4 @@ pierwszy program
 
 Pierwszy program Java w ramach warsztatów Coderslab. 
 
-demo
-
-instrukcja
-
-przykładowy kod
-
-Licencja
-
-Inspiracja
+Kod podzielono na metody główne i pomocnicze. Metody główne to te z instrukcji zadania, pomocnicze- moje dodatkowe. 
