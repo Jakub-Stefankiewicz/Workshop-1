@@ -17,38 +17,17 @@ import java.util.SortedMap;
 
 public class TaskManager {
     public static void main(String[] args) {
-    /* wczytanie tablicy: **/
-
-        listArray();
 
     /* wybór opcji: **/
-        String option="";
-        Scanner scan = new Scanner(System.in);
-        System.out.println(ConsoleColors.BLUE + "Please select an option" + ConsoleColors.RESET);
-        optionsList();
-            while (!option.equals("exit")){
-                switch (option= scan.nextLine()) {
-                    case "add":
-                        add();
-                        break;
-                    case "remove":
-                        remove();
-                        break;
-                    case "list":
-                        tasksList();
-                        break;
-                    case "exit":
-                        exit();
-                        break;
-                    default:
-                        System.out.println(ConsoleColors.PURPLE_BOLD + "wybierz jedną z dostępnych opcji!" + ConsoleColors.RESET);
-            }
-        }
+        options();
     }
 
     /* METODY GŁÓWNE **/
     /* metoda z listą opcji do wybrou:**/
     public static void optionsList() {
+
+        listArray();
+
         String optionsList[] = {"add", "remove", "list", "exit"};
         for (int i = 0; i < optionsList.length; i++) {
             System.out.println(optionsList[i]);
@@ -80,6 +59,8 @@ public class TaskManager {
     /* metoda dodająca zadanie**/
     public static void add(){
 
+        listArray();
+
         tasks=Arrays.copyOf(tasks,tasks.length+1);
         tasks[tasks.length-1]=new String[3];
 
@@ -110,6 +91,9 @@ public class TaskManager {
 
     /* metoda usuwająca zadanie**/
     public static void remove(){
+
+        listArray();
+
         System.out.println("Please select number to remove");
         Scanner rem=new Scanner(System.in);
         String remString="";
@@ -160,6 +144,31 @@ public class TaskManager {
         System.out.println(ConsoleColors.RED + "bye, bye" + ConsoleColors.RESET);
     }
 
+    /* metoda do wyboru opcji**/
+    public static void options(){
+        String option="";
+        Scanner scan = new Scanner(System.in);
+        System.out.println(ConsoleColors.BLUE + "Please select an option" + ConsoleColors.RESET);
+        optionsList();
+        while (!option.equals("exit")){
+            switch (option= scan.nextLine()) {
+                case "add":
+                    add();
+                    break;
+                case "remove":
+                    remove();
+                    break;
+                case "list":
+                    tasksList();
+                    break;
+                case "exit":
+                    exit();
+                    break;
+                default:
+                    System.out.println(ConsoleColors.PURPLE_BOLD + "wybierz jedną z dostępnych opcji!" + ConsoleColors.RESET);
+            }
+        }
+    }
 
     /* METODY POMOCNICZE**/
 
