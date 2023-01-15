@@ -17,6 +17,9 @@ import java.util.SortedMap;
 
 public class TaskManager {
     public static void main(String[] args) {
+    /* wczytanie tablicy: **/
+
+        listArray();
 
     /* wybór opcji: **/
         String option="";
@@ -96,10 +99,10 @@ public class TaskManager {
 
     /* metoda usuwająca zadanie**/
     public static void remove(){
-//        System.out.println("Please select number to remove");
-//        Scanner rem=new Scanner(System.in);
-//        int remInt=Integer.parseInt(rem.nextLine());
-//        tasks= ArrayUtils.remove(tasks,remInt);
+        System.out.println("Please select number to remove");
+        Scanner rem=new Scanner(System.in);
+        int remInt=Integer.parseInt(rem.nextLine());
+        tasks= ArrayUtils.remove(tasks,remInt);
     }
 
     /* metoda wyświetlająca listę zadań**/
@@ -107,7 +110,7 @@ public class TaskManager {
         for (int i = 0; i < tasks.length; i++) {
             StringBuilder linia= new StringBuilder();
             for (int j = 0; j < cols(); j++) {
-                linia.append(listArray()[i][j] + ",");
+                linia.append(tasks[i][j] + ",");
             }
             String lineNr=Integer.toString(i);
             System.out.println(lineNr + " " + ":" + " " + linia);
