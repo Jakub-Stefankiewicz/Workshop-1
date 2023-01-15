@@ -41,7 +41,7 @@ public class TaskManager {
                         exit();
                         break;
                     default:
-                        System.out.println("wybierz jedną z dostępnych opcji!");
+                        System.out.println(ConsoleColors.PURPLE_BOLD + "wybierz jedną z dostępnych opcji!" + ConsoleColors.RESET);
             }
         }
     }
@@ -91,19 +91,43 @@ public class TaskManager {
         Scanner date= new Scanner(System.in);
         tasks[tasks.length-1][1]=date.next();
 
-        System.out.println("Please add task priority");
-        Scanner priority= new Scanner(System.in);
-        tasks[tasks.length-1][2]=priority.next();
-
+        System.out.println("Please add task priority: true/false");
+        Scanner scan = new Scanner(System.in);
+        String option="";
+        while (!option.equals("true") && !option.equals("false")){
+            switch (option= scan.nextLine()) {
+                case "true":
+                    tasks[tasks.length - 1][2] = option;
+                    break;
+                case "false":
+                    tasks[tasks.length - 1][2] = option;
+                    break;
+                default:
+                    System.out.println(ConsoleColors.PURPLE_BOLD + "write true or false!" + ConsoleColors.RESET);
+            }
+        }
     }
 
     /* metoda usuwająca zadanie**/
     public static void remove(){
         System.out.println("Please select number to remove");
         Scanner rem=new Scanner(System.in);
-        int remInt=Integer.parseInt(rem.nextLine());
-        tasks= ArrayUtils.remove(tasks,remInt);
-    }
+        String remString="";
+        int remInt=tasks.length+1;
+        while (remInt > tasks.length || remInt < 0) {
+            remString = rem.nextLine();
+            try {
+            remInt = Integer.parseInt(remString);
+                if (remInt < tasks.length && remInt > 0) {
+                    tasks = ArrayUtils.remove(tasks, remInt);
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(ConsoleColors.PURPLE_BOLD + "podaj wartość liczbową!" + ConsoleColors.RESET);
+            }
+            System.out.println(ConsoleColors.PURPLE_BOLD + "podaj wartość z zakresu od 0 do " + (tasks.length - 1) + ConsoleColors.RESET);
+            }
+        }
 
     /* metoda wyświetlająca listę zadań**/
     public static void tasksList() {
@@ -178,7 +202,6 @@ public class TaskManager {
 
     /* deklaracja dwuwymiarowej tablicy**/
     static String[][] tasks= new String[rows()][cols()];
-
 
 }
 
